@@ -1,21 +1,26 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 
 void AddTarefa(char tarefa[30][2][50], char titulo[20], char descricao[50], int cadastrados = 0, int escolha = 0) {
 	for (int i = cadastrados; i < cadastrados + escolha; i++) {
 
-		printf("Escreva o nome da tarefa [%i]: ", i+1);
-		scanf("%s", titulo);
-		printf("Escreva a descricao da tarefa [%i]: ", i+1);
-		scanf("%s", descricao);
+		printf("Escreva o nome da tarefa [%i]: ", i + 1);
+		scanf_s("%s", titulo);
+		printf("Escreva a descricao da tarefa [%i]: ", i + 1);
+		scanf_s("%s", descricao);
 
-		strcpy(tarefa[i][1], titulo);
-		strcpy(tarefa[i][2], descricao);
+		strcpy_s(tarefa[i][0], titulo);
+		strcpy_s(tarefa[i][1], descricao);
 
 	}
 }
 
+void VerTarefas(char tarefa[30][2][50], int cadastrados) {
+	for (int i = 0; i < cadastrados; i++) {
+		printf("[%i] %s", i, tarefa[i][0]);
+		printf(" - Descricao -\n%s\n", tarefa[i][1]);
+	}
+}
 
 int main() {
 
@@ -28,23 +33,32 @@ int main() {
 
 	printf("- - - COMANDOS - - -\n1 - Adicionar Tarefa\n2 - Editar Tarefa\n3 - Deletar Tarefa\n4 - Ver Tarefas\n5 - Salvar\n\n");
 
-	scanf("%i", &escolha);
+	while (escolha != -1) {
 
-	switch (escolha) {
+		scanf_s("%i", &escolha);
 
-	case 1:
+		switch (escolha) {
 
-		printf("Quantidade: ");
-		scanf("%i", &escolha);
+		case 1:
 
-		if ((30 - cadastrados) < escolha) {
+			printf("Quantidade: ");
+			scanf_s("%i", &escolha);
 
+			if ((30 - cadastrados) < escolha) {
+
+			}
+			else {
+
+				AddTarefa(tarefa, titulo, descricao, cadastrados, escolha);
+				cadastrados += escolha;
+
+			}
+			break;
+
+		case 4:
+			VerTarefas(tarefa, cadastrados);
+			break;
 		}
-		else {
-			AddTarefa(tarefa, titulo, descricao, cadastrados, escolha);
 
-			cadastrados += escolha;
-		}
-		break;
 	}
 }
