@@ -24,6 +24,27 @@ void EditTarefa(char tarefa[30][2][50], int indice) {
 	scanf("%s", tarefa[indice][1]);
 }
 
+void DeleteTarefa(char tarefa[30][2][50], int indice, int cadastrados) {
+	int confirma;
+	printf("Tem certeza? (0/1) ");
+	scanf("%i", &confirma);
+
+	if (confirma == 0) {
+
+		for (int i = indice+1; i < cadastrados+1; i++) {
+
+			strcpy(tarefa[i-1][1], tarefa[i][1]);
+			strcpy(tarefa[i-1][0], tarefa[i][0]);
+
+		}
+
+		cadastrados = cadastrados - 1;
+		printf("Tarefa deletada.\n");
+
+	}
+
+}
+
 void VerTarefas(char tarefa[30][2][50], int cadastrados) {
 	for (int i = 0; i < cadastrados; i++) {
 		printf("[%i] %s", i + 1, tarefa[i][0]);
@@ -67,11 +88,18 @@ int main() {
 			printf("Posicao: ");
 			scanf("%i", &indice);
 
-			EditTarefa(tarefa, indice);
+			EditTarefa(tarefa, indice-1);
+			break;
+
+		case 3:
+			printf("Posicao: ");
+			scanf("%i", &indice);
+
+			DeleteTarefa(tarefa, indice-1, cadastrados-1);
 			break;
 
 		case 4:
-			VerTarefas(tarefa, cadastrados);
+			VerTarefas(tarefa, cadastrados-1);
 			break;
 		}
 
